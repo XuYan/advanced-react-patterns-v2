@@ -1,11 +1,11 @@
 import React from 'react'
-import {renderToggle, fireEvent} from '../../test/utils'
-import Usage from '../exercises-final/04'
-// import Usage from '../exercises/04'
+import { renderToggle, fireEvent } from '../../test/utils'
+// import Usage from '../exercises-final/04'
+import Usage from '../exercises/04'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(
+  const { toggleButton, toggle } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -17,7 +17,7 @@ test('renders a toggle component', () => {
 
 test('can also toggle with the button', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, getByLabelText} = renderToggle(
+  const { toggleButton, getByLabelText } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -40,4 +40,12 @@ test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
 })
+/**
+ * Both render props and HOC try to solve code reuse problem.
+ * Refer to these two blogs for more info:
+ * https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce
+ * https://kentcdodds.com/blog/when-to-not-use-render-props
+ *
+ * Render props pattern allows the component consumer to decide what to render using the component's state.
+ */
 ////////////////////////////////

@@ -1,11 +1,11 @@
 import React from 'react'
-import {renderToggle} from '../../test/utils'
-import Usage from '../exercises-final/02'
-// import Usage from '../exercises/02'
+import { renderToggle } from '../../test/utils'
+// import Usage from '../exercises-final/02'
+import Usage from '../exercises/02'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle, container} = renderToggle(
+  const { toggleButton, toggle, container } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -32,4 +32,11 @@ test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
 })
+/**
+ * We can use a compound component to keep parts closer to each other and make their relationship more explicitly.
+ * For these parts, we can write function components as static properties.
+ * The compound component can add additional props to these parts.
+ *
+ * New APIs: React.Children.map(...) and React.cloneElement(...)
+ */
 ////////////////////////////////

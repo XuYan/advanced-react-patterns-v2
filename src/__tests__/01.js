@@ -1,11 +1,11 @@
 import React from 'react'
-import {renderToggle} from '../../test/utils'
-import Usage from '../exercises-final/01'
-// import Usage from '../exercises/01'
+import { renderToggle } from '../../test/utils'
+// import Usage from '../exercises-final/01'
+import Usage from '../exercises/01'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(
+  const { toggleButton, toggle } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -17,7 +17,7 @@ test('renders a toggle component', () => {
 
 test('can toggle back and forth', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(
+  const { toggleButton, toggle } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -40,4 +40,16 @@ test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
 })
+
+/**
+ * setState is an async batching function.
+ * E.g.
+ * state = { on: false }
+ * this.setState({on: !this.state.on })
+ * console.log(this.state.on) // => false
+ *
+ * ALWAYS use a state updater function for `newState` to avoid issues with batching.
+ * E.g.
+ * this.setState(currentState => ({ on: !currentState.on }), () => { console.log(this.state.on) }) // => true
+ */
 ////////////////////////////////

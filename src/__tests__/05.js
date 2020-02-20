@@ -1,11 +1,11 @@
 import React from 'react'
-import {renderToggle, fireEvent} from '../../test/utils'
-import Usage from '../exercises-final/05'
-// import Usage from '../exercises/05'
+import { renderToggle, fireEvent } from '../../test/utils'
+// import Usage from '../exercises-final/05'
+import Usage from '../exercises/05'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(
+  const { toggleButton, toggle } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -17,7 +17,7 @@ test('renders a toggle component', () => {
 
 test('can also toggle with the custom button', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, getByLabelText} = renderToggle(
+  const { toggleButton, getByLabelText } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -40,4 +40,7 @@ test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
 })
+/**
+ * Use prop collection with render props to make it easier to apply a set of props to your component
+ */
 ////////////////////////////////

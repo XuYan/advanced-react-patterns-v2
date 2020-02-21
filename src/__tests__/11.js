@@ -1,11 +1,11 @@
 import React from 'react'
-import {renderToggle} from '../../test/utils'
-import Usage from '../exercises-final/11'
-// import Usage from '../exercises/11'
+import { renderToggle } from '../../test/utils'
+// import Usage from '../exercises-final/11'
+import Usage from '../exercises/11'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle, container} = renderToggle(
+  const { toggleButton, toggle, container } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -30,4 +30,9 @@ test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
 })
+
+/**
+ * 1. 'static Consumer = Context.Consumer' is a smart move!
+ * 2. The bonus questions worth to do again.
+ */
 ////////////////////////////////

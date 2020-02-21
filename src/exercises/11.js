@@ -1,23 +1,37 @@
 // The provider pattern
-import React, {Fragment} from 'react'
-import {Switch} from '../switch'
+import React, { Fragment } from 'react'
+import { Switch } from '../switch'
 
 // 🐨 create your React context here with React.createContext
+const Context = React.createContext()
 
 class Toggle extends React.Component {
   // 🐨 expose the ToggleContext.Consumer as a static property of Toggle here.
-  state = {on: false}
+  // Xu Yan: If we don't need to do the validation, we just do this below:
+  // static Consumer = Context.Consumer
+  static Consumer = ({ children }) => <Context.Consumer>{context => {
+    if (context === undefined) {
+      throw 'Context.Consumer is not rendered within a Context.Provider'
+    }
+    return children(context)
+  }
+  }</Context.Consumer>
   toggle = () =>
     this.setState(
-      ({on}) => ({on: !on}),
+      ({ on }) => ({ on: !on }),
       () => this.props.onToggle(this.state.on),
     )
+  state = { on: false, toggle: this.toggle }
   render() {
     // 🐨 replace this with rendering the ToggleContext.Provider
-    return this.props.children({
-      on: this.state.on,
-      toggle: this.toggle,
-    })
+    const { children, ...rest } = this.props
+    const ui = typeof children === 'function' ? children() : children
+    return (
+      // Xu Yan: Avoid unnecessary re-rendering by passing state as provider value.
+      <Context.Provider value={this.state} {...rest}>
+        {ui}
+      </Context.Provider>
+    )
   }
 }
 
@@ -29,7 +43,7 @@ class Toggle extends React.Component {
 //
 // 💯 Extra credit: support render props as well
 //
-// 💯 Extra credit: support (and expose) compound components!
+// 💯 Extra credit: support (and expose) compound components! // Xu Yan: Not implemented
 
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.
@@ -37,7 +51,7 @@ class Toggle extends React.Component {
 const Layer1 = () => <Layer2 />
 const Layer2 = () => (
   <Toggle.Consumer>
-    {({on}) => (
+    {({ on }) => (
       <Fragment>
         {on ? 'The button is on' : 'The button is off'}
         <Layer3 />
@@ -48,7 +62,7 @@ const Layer2 = () => (
 const Layer3 = () => <Layer4 />
 const Layer4 = () => (
   <Toggle.Consumer>
-    {({on, toggle}) => <Switch on={on} onClick={toggle} />}
+    {({ on, toggle }) => <Switch on={on} onClick={toggle} />}
   </Toggle.Consumer>
 )
 
@@ -89,4 +103,4 @@ function Usage({
 
 Usage.title = 'The Provider Pattern'
 
-export {Toggle, Usage as default}
+export { Toggle, Usage as default }

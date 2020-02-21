@@ -1,12 +1,12 @@
 import React from 'react'
 import chalk from 'chalk'
-import {renderToggle, render} from '../../test/utils'
-import Usage, {withToggle} from '../exercises-final/12'
-// import Usage, {withToggle} from '../exercises/12'
+import { renderToggle, render } from '../../test/utils'
+import Usage, { withToggle } from '../exercises-final/12'
+// import Usage, { withToggle } from '../exercises/12'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle, container} = renderToggle(
+  const { toggleButton, toggle, container } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -87,4 +87,7 @@ test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
 })
+/**
+ * Use ref to get dom node or React component instance.
+ */
 ////////////////////////////////

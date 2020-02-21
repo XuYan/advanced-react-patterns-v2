@@ -1,11 +1,11 @@
 import React from 'react'
-import {renderToggle, fireEvent} from '../../test/utils'
+import { renderToggle, fireEvent } from '../../test/utils'
 import Usage from '../exercises-final/09'
 // import Usage from '../exercises/09'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(
+  const { toggleButton, toggle } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -75,7 +75,7 @@ test('can click too much', () => {
   // I just want to make sure that you aren't including the `type`
   // in your state by mistake!
   try {
-    expect(toggleInstance.state).toEqual({on: true})
+    expect(toggleInstance.state).toEqual({ on: true })
   } catch (error) {
     if (toggleInstance.state.type) {
       console.log(
@@ -99,4 +99,10 @@ test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
 })
+/**
+ * Use enum instead of hardcoded 'type'.
+ * 1. setState({}) will re-render but setState(null) won't re-render.
+ * 2. Remove type to avoid unnecessary re-rendering.
+ * 3. Review the two comments (Xu Yan: ...) in exercise 9.
+ */
 ////////////////////////////////

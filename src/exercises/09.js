@@ -1,7 +1,7 @@
 // state reducer with types
 
 import React from 'react'
-import {Switch} from '../switch'
+import { Switch } from '../switch'
 
 const callAll = (...fns) => (...args) =>
   fns.forEach(fn => fn && fn(...args))
@@ -9,10 +9,10 @@ const callAll = (...fns) => (...args) =>
 class Toggle extends React.Component {
   static defaultProps = {
     initialOn: false,
-    onReset: () => {},
+    onReset: () => { },
     stateReducer: (state, changes) => changes,
   }
-  initialState = {on: this.props.initialOn}
+  initialState = { on: this.props.initialOn }
   state = this.initialState
   internalSetState(changes, callback) {
     this.setState(state => {
@@ -26,27 +26,33 @@ class Toggle extends React.Component {
       // property and return an object only if the state changes
       // 💰 to remove the `type`, you can destructure the changes:
       // `{type, ...c}`
-      return Object.keys(reducedChanges).length
-        ? reducedChanges
+
+      // Xu Yan: We pruned 'type' property from reducedChanges to avoid unnecessary re-rendering,
+      // like clicking reset after click toggle button twice, the toggle button shouldn't be re-rendered.
+      const { type, ...prunedChanges } = reducedChanges
+      return Object.keys(prunedChanges).length
+        ? prunedChanges
         : null
     }, callback)
   }
   reset = () =>
     // 🐨 add a `type` string property to this call
-    this.internalSetState(this.initialState, () =>
+    this.internalSetState({ ...this.initialState, type: 'normal' }, () =>
       this.props.onReset(this.state.on),
     )
   // 🐨 accept a `type` property here and give it a default value
-  toggle = () =>
+  toggle = ({ type = 'normal' } = {}) =>
     this.internalSetState(
       // pass the `type` string to this object
-      ({on}) => ({on: !on}),
+      ({ on }) => ({ on: !on, type }),
       () => this.props.onToggle(this.state.on),
     )
-  getTogglerProps = ({onClick, ...props} = {}) => ({
+  getTogglerProps = ({ onClick, ...props } = {}) => ({
     // 🐨 change `this.toggle` to `() => this.toggle()`
     // to avoid passing the click event to this.toggle.
-    onClick: callAll(onClick, this.toggle),
+
+    // Xu Yan: this is because click event happens to have a 'type' property!!!
+    onClick: callAll(onClick, () => this.toggle()),
     'aria-pressed': this.state.on,
     ...props,
   })
@@ -71,10 +77,10 @@ class Usage extends React.Component {
     onToggle: (...args) => console.log('onToggle', ...args),
     onReset: (...args) => console.log('onReset', ...args),
   }
-  initialState = {timesClicked: 0}
+  initialState = { timesClicked: 0 }
   state = this.initialState
   handleToggle = (...args) => {
-    this.setState(({timesClicked}) => ({
+    this.setState(({ timesClicked }) => ({
       timesClicked: timesClicked + 1,
     }))
     this.props.onToggle(...args)
@@ -88,12 +94,12 @@ class Usage extends React.Component {
       return changes
     }
     if (this.state.timesClicked >= 4) {
-      return {...changes, on: false}
+      return { ...changes, on: false }
     }
     return changes
   }
   render() {
-    const {timesClicked} = this.state
+    const { timesClicked } = this.state
     return (
       <Toggle
         stateReducer={this.toggleStateReducer}
@@ -101,7 +107,7 @@ class Usage extends React.Component {
         onReset={this.handleReset}
         ref={this.props.toggleRef}
       >
-        {({on, toggle, reset, getTogglerProps}) => (
+        {({ on, toggle, reset, getTogglerProps }) => (
           <div>
             <Switch
               {...getTogglerProps({
@@ -112,7 +118,7 @@ class Usage extends React.Component {
               <div data-testid="notice">
                 Whoa, you clicked too much!
                 <br />
-                <button onClick={() => toggle({type: 'forced'})}>
+                <button onClick={() => toggle({ type: 'forced' })}>
                   Force Toggle
                 </button>
                 <br />
@@ -131,7 +137,7 @@ class Usage extends React.Component {
 }
 Usage.title = 'State Reducers (with change types)'
 
-export {Toggle, Usage as default}
+export { Toggle, Usage as default }
 
 /* eslint
 "no-unused-vars": [

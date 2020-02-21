@@ -1,11 +1,11 @@
 import React from 'react'
-import {renderToggle, fireEvent} from '../../test/utils'
-import Usage from '../exercises-final/08'
-// import Usage from '../exercises/08'
+import { renderToggle, fireEvent } from '../../test/utils'
+// import Usage from '../exercises-final/08'
+import Usage from '../exercises/08'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(
+  const { toggleButton, toggle } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -78,4 +78,11 @@ test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
 })
+/**
+ * We don't have to use Redux to maintain app states. We can use State Reducer Pattern instead.
+ * Write a wrapper of setState(called internalSetState in the exercise) to reduce current state with change object.
+ *
+ * For API setState(updater, callback): updater can be a change object or a function (currentState => changeObject).
+ * setState internally will merge the change object with component state.
+ */
 ////////////////////////////////

@@ -1,11 +1,11 @@
 import React from 'react'
-import {renderToggle, fireEvent} from '../../test/utils'
-import Usage, { Toggle } from '../exercises-final/07'
-// import Usage, { Toggle } from '../exercises/07'
+import { renderToggle, fireEvent } from '../../test/utils'
+// import Usage, { Toggle } from '../exercises-final/07'
+import Usage, { Toggle } from '../exercises/07'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(
+  const { toggleButton, toggle } = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
@@ -17,8 +17,8 @@ test('renders a toggle component', () => {
 
 test('can reset the state of the toggle', () => {
   const handleReset = jest.fn()
-  const {toggleButton, toggle, getByText} = renderToggle(
-    <Usage onToggle={() => {}} onReset={handleReset} />,
+  const { toggleButton, toggle, getByText } = renderToggle(
+    <Usage onToggle={() => { }} onReset={handleReset} />,
   )
   toggle()
   fireEvent.click(getByText('Reset'))
@@ -45,4 +45,7 @@ test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
 })
+/**
+ * static defaultProps = {...} can be used to create default props for class component.
+ */
 ////////////////////////////////
